@@ -1,0 +1,15 @@
+.profile__overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    background-color: rgb(0, 0, 0, 0);
+    transition: background-color 0.3s linear;
+    opacity: 0;
+}
+
+.profile__overlay:hover {
+    opacity: 1;
+    background-color: rgb(0, 0, 0, 0.8);
+}
+

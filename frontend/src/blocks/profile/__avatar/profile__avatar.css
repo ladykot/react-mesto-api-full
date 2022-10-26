@@ -1,0 +1,9 @@
+.profile__avatar {
+    display: flex;
+    width: 120px;
+    height: 120px;
+    justify-content: flex-start;
+}
+
+
+

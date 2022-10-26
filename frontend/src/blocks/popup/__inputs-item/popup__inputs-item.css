@@ -1,0 +1,27 @@
+.popup__inputs-item {
+    width: 100%;
+    padding: 0 0 12px 0;
+    margin: 18px 0 0 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    min-height: 14px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+/* Стилизуем плейсхолдеры */
+.popup__inputs-item::-webkit-input-placeholder {
+    color: #C4C4C4;
+}
+
+.popup__inputs-item::-moz-placeholder {
+    color: #C4C4C4;
+}
+
+.popup__inputs-item::-ms-input-placeholder {
+    color: #C4C4C4;
+}

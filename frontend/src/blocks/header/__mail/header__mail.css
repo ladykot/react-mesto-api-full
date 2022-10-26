@@ -1,0 +1,12 @@
+.header__mail {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+}

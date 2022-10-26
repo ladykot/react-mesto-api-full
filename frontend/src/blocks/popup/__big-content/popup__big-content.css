@@ -1,0 +1,11 @@
+.popup__big-content {
+    max-height: 75vh;
+    min-width: 282px;
+    top: 36px;
+    padding: 25px 22px;
+    margin: 0 19px 40px 19px;
+    box-sizing: border-box;
+
+
+}
+

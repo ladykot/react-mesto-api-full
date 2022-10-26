@@ -1,0 +1,13 @@
+.cards__union {
+    transition: opacity 0.2s linear;
+    border: none;
+    background-color: white;
+    width: 22px;
+    height: 19px;
+    background-image: url(../../../images/heard_disabled.svg);
+}
+
+.cards__union:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}

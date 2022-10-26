@@ -1,0 +1,11 @@
+.popup__container_big-foto {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    margin: 0 19px 0 19px;
+    max-width: 880px;
+
+}

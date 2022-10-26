@@ -1,0 +1,16 @@
+.popup__big-foto {
+    /* min-width: 240px; */
+    width: 100%;
+    max-width: 75vw;
+    max-height: 75vh;
+    top: 36px;
+    background: transparent;
+    padding: 0 19px 0 19px;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+    .popup__big-foto {
+        padding: 0 40px 0 40px;
+    }
+}

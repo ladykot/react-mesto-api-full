@@ -1,0 +1,28 @@
+.profile__name {
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 27px;
+  line-height: 33px;
+  justify-self: center;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .profile__name {
+    justify-self: start;
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .profile__name {
+    font-size: 42px;
+    line-height: 48px;
+  }
+}

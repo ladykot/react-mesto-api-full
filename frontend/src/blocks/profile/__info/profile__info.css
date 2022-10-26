@@ -1,0 +1,22 @@
+.profile__info {
+    margin: 26px 0 0 0;
+    display: grid;
+    grid-template-columns: fit-content(200px) 18px;
+    grid-template-rows: auto;
+    gap: 8px;
+}
+
+@media screen and (min-width: 768px) {
+    .profile__info {
+        grid-template-columns: fit-content(240px) 18px;
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .profile__info {
+        grid-template-columns: fit-content(300px) 24px;
+        column-gap: 18px;
+        row-gap: 10px;
+    }
+}

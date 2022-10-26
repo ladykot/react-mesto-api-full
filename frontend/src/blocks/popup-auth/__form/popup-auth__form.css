@@ -1,0 +1,20 @@
+.popup-auth__form {
+    width: 358px;
+    min-height: 181px;
+    box-sizing: border-box;
+    top: 36px;
+    margin: 0 19px 40px 19px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@media screen and (min-width: 768px) {
+    .popup__form {
+        width: 430px;
+        border-radius: 15px;
+        margin-right: 40px;
+        margin-left: 40px;
+        padding: 34px 36px 37px;
+    }
+}

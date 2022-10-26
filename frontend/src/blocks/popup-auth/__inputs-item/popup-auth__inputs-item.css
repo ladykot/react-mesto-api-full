@@ -1,0 +1,32 @@
+.popup-auth__inputs-item {
+    width: 100%;
+    padding: 0 0 13px 0;
+    margin: 18px 0 0 0;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    min-height: 14px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: white;
+}
+
+/* Стилизуем плейсхолдеры */
+.popup-auth__inputs-item::-webkit-input-placeholder {
+    color: white;
+}
+
+.popup-auth__inputs-item::-moz-placeholder {
+    color: white;
+}
+
+.popup-auth__inputs-item::-ms-input-placeholder {
+    color: white;
+}
+
+.popup-auth__inputs-item:focus {
+    color: white;
+}

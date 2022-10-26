@@ -1,0 +1,6 @@
+.popup-auth__signin {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+}
