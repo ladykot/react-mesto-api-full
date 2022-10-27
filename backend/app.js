@@ -10,7 +10,8 @@ const { createUser, login } = require('./controllers/users');
 const auth = require('./midlewares/auth');
 const { errorHandler } = require('./midlewares/errorHandler');
 const { urlPattern } = require('./utils/url-pattern');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./midlewares/logger');
+require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 
@@ -20,6 +21,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet()); // проставляем заголовки безопасности
+
+// ситуации, в которых сервер падает
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадет');
+  }, 0);
+});
+
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb');
 

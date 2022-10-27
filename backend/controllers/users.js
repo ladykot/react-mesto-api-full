@@ -7,6 +7,8 @@ const User = require('../models/user');
 const { SALT } = require('../utils/constants');
 const UnauthorizedError = require('../errors/unauthorized_401');
 
+const { JWT_SECRET } = process.env;
+
 // функции-обработчики роутов:
 
 module.exports.createUser = (req, res, next) => {
@@ -35,7 +37,9 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        return next(new ConflictError('Пользователь с таким email уже существует'));
+        return next(
+          new ConflictError('Пользователь с таким email уже существует'),
+        );
       }
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Данные переданы некорректно'));
@@ -150,7 +154,8 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findOne({ email }).select('+password')
+  return User.findOne({ email })
+    .select('+password')
     .then((user) => {
       if (!user) {
         throw new UnauthorizedError('Неверный логин или пароль');
@@ -159,13 +164,9 @@ module.exports.login = (req, res, next) => {
         if (!isValidPassword) {
           throw new UnauthorizedError('Неверный логин или пароль');
         }
-        const token = jwt.sign(
-          { _id: user._id },
-          'abdbc2f26ff6791da689b0a5d60d260941ad23c414d6d14027ba42e84fdb45b4',
-          {
-            expiresIn: '7d',
-          },
-        );
+        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+          expiresIn: '7d',
+        });
         return res.status(200).send({ token });
       });
     })
