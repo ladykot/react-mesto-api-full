@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -11,7 +12,6 @@ const auth = require('./midlewares/auth');
 const { errorHandler } = require('./midlewares/errorHandler');
 const { urlPattern } = require('./utils/url-pattern');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
-require('dotenv').config();
 
 const { PORT = 3000 } = process.env;
 
@@ -31,6 +31,8 @@ app.get('/crash-test', () => {
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb');
+
+app.use(requestLogger); // подключаем логгер запросов
 
 app.post(
   '/signup',
@@ -57,7 +59,6 @@ app.post(
   login,
 );
 
-app.use(requestLogger); // подключаем логгер запросов
 app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));

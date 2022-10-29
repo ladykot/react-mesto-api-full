@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const isUrl = require('validator/lib/isURL');
+const isEmail = require('validator/lib/isEmail');
 
 // Опишем схему пользователя:
 const userSchema = new mongoose.Schema({
@@ -27,6 +28,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    validate: {
+      validator: (v) => isEmail(v),
+      message: 'Неправильный формат почты',
+    },
   },
   password: {
     type: String,

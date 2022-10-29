@@ -7,7 +7,7 @@ const User = require('../models/user');
 const { SALT } = require('../utils/constants');
 const UnauthorizedError = require('../errors/unauthorized_401');
 
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 // функции-обработчики роутов:
 
@@ -65,7 +65,7 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('The user is not found');
       }
-      return res.status(200).send({ data: user });
+      return res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -162,11 +162,19 @@ module.exports.login = (req, res, next) => {
       }
       bcrypt.compare(password, user.password, (err, isValidPassword) => {
         if (!isValidPassword) {
-          throw new UnauthorizedError('Неверный логин или пароль');
+          return next(new UnauthorizedError('Неверный логин или пароль'));
         }
-        const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-          expiresIn: '7d',
-        });
+        const token = jwt.sign(
+          { _id: user._id },
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          {
+            expiresIn: '7d',
+          },
+        );
+        // const token = jwt.sign(
+        //   { _id: user._id },
+        //   NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
+        // );
         return res.status(200).send({ token });
       });
     })
