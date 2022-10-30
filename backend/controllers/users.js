@@ -93,13 +93,13 @@ module.exports.getUser = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError('User not found');
+        throw new NotFoundError('Пользователь не найден');
       }
       return res.status(200).send({ data: user });
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        return next(new BadRequestError('Id is not correct'));
+        return next(new BadRequestError('Передан некорретный Id'));
       }
       return next(err);
     });
@@ -171,10 +171,6 @@ module.exports.login = (req, res, next) => {
             expiresIn: '7d',
           },
         );
-        // const token = jwt.sign(
-        //   { _id: user._id },
-        //   NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
-        // );
         return res.status(200).send({ token });
       });
     })

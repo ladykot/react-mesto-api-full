@@ -1,18 +1,28 @@
-import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card({ card, onCardClick, onCardLike, onCardDelete, onCardDeleteClick }) {
+function Card({
+  card,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+  onCardDeleteClick,
+}) {
   const currentUser = React.useContext(CurrentUserContext);
-  const {link, name, _id, owner: {_id: ownerId}} = card;
+  const {
+    link,
+    name,
+    _id,
+    owner: { _id: ownerId },
+  } = card;
 
   const isOwn = ownerId === currentUser._id;
   const likes = card.likes.map((item) => item._id); // упрощаем работу с лайками, оставили только id
   const isLiked = likes.includes(currentUser._id);
 
-
   // обработчик клика по карточке для просмотра изображения
   function handleImageClick() {
-    onCardClick(card); 
+    onCardClick(card);
   }
 
   // обработчик клика на Сердечко
@@ -22,7 +32,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, onCardDeleteClick }
 
   // обработчик клика на Корзину
   function handleDeleteClick() {
-    onCardDeleteClick(card)
+    onCardDeleteClick(card);
   }
 
   return (
@@ -45,7 +55,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete, onCardDeleteClick }
         <h2 className="cards__title">{name}</h2>
         <button
           type="button"
-          className={`cards__union ${isLiked && "cards__union_active"}`}
+          className={`cards__union ${isLiked && 'cards__union_active'}`}
           aria-label="лайк"
           onClick={handleLikeClick}
         ></button>
