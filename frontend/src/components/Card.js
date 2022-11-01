@@ -9,14 +9,6 @@ function Card({
   onCardDeleteClick,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  // const {
-  //   link,
-  //   name,
-  //   owner: { _id: ownerId },
-  // } = card;
-
-  console.log("id владельца карточки", card.owner)
-  console.log("id текущего пользователя", currentUser._id)
 
   const isOwn = card.owner === currentUser._id;
   const likes = card.likes.map((item) => item._id); // упрощаем работу с лайками, оставили только id

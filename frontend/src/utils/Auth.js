@@ -35,7 +35,6 @@ export const getContent = (token) => {
 };
 
 export const authorize = (email, password, token) => {
-  // console.log(token);
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -47,7 +46,6 @@ export const authorize = (email, password, token) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       // прилетает token
       if (data) {
         localStorage.setItem('jwt', data.token);
