@@ -1,8 +1,8 @@
 const allowedCors = [
   'http://mesto.ladykot.nomoredomains.icu',
   'https://mesto.ladykot.nomoredomains.icu',
-  'http://api.mesto.ladykot.nomoredomains.icu',
-  'https://api.mesto.ladykot.nomoredomains.icu',
+  // 'http://api.mesto.ladykot.nomoredomains.icu',
+  // 'https://api.mesto.ladykot.nomoredomains.icu',
   // 'http://localhost:5555',
   // 'http://localhost:7777',
   // 'https://localhost:3000',
@@ -18,13 +18,14 @@ module.exports = (req, res, next) => {
 
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
-    // res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
   }
 
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-
     res.header('Access-Control-Allow-Headers', requestHeaders);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     return res.end();
   }
