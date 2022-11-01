@@ -8,9 +8,11 @@ const Card = require('../models/card');
 
 module.exports.addCard = (req, res, next) => {
   const { name, link } = req.body;
+  console.log(name);
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.send({ data: card }))
+    // .populate(['owner', 'likes'])
+    .then((card) => res.send({ card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Данные для карточки переданы некорректно'));
@@ -22,7 +24,7 @@ module.exports.addCard = (req, res, next) => {
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send({ data: cards }))
+    .then((cards) => res.send({ cards }))
     .catch(next);
 };
 
@@ -35,7 +37,7 @@ module.exports.deleteCard = (req, res, next) => {
       if (!card.owner.equals(req.user._id)) {
         throw new ForbittenError('Вы не можете удалить чужую карточку');
       }
-      return card.remove().then(() => res.send({ data: card }));
+      return card.remove().then(() => res.send({ card }));
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
@@ -51,11 +53,12 @@ module.exports.addLike = (req, res, next) => {
     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
     { new: true },
   )
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка с указанным _id не найдена');
       }
-      return res.send({ data: card, message: 'Лайк!' });
+      return res.send({ card, message: 'Лайк!' });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -71,11 +74,12 @@ module.exports.dislike = (req, res, next) => {
     { $pull: { likes: req.user._id } }, // убрать _id из массива
     { new: true },
   )
+    .populate(['owner', 'likes'])
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка с указанным _id не найдена');
       }
-      return res.send({ data: card.likes });
+      return res.send({ card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {

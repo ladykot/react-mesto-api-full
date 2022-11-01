@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint .",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "cross-env PORT=7777 node app.js",
+    "dev": "cross-env PORT=7777 nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.24.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",

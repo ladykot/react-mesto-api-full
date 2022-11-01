@@ -1,11 +1,11 @@
-export const BASE_URL = "https://api.mesto.ladykot.nomoredomains.icu";
+import { BASE_URL } from "./constants";
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      // Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
   })
@@ -13,6 +13,7 @@ export const register = (email, password) => {
       return response.json();
     })
     .then((res) => {
+      console.log('Регистрация', res);
       return res;
     })
     .catch((err) => console.log(err));
@@ -22,34 +23,38 @@ export const register = (email, password) => {
 export const getContent = (token) => {
   // const token = localStorage.getItem('jwt');
   return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   })
     .then((res) => res.json())
     .then((data) => data);
 };
 
-export const authorize = (email, password) => {
+export const authorize = (email, password, token) => {
+  // console.log(token);
   return fetch(`${BASE_URL}/signin`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      // Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: "application/json",
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, password }),
   })
-  .then((response) => response.json())
-  .then((data) => {  // прилетает token
-    if (data) {
-      localStorage.setItem("jwt", data.token);
-      return data;
-    } else {
-      return;
-    }
-  })
-  .catch((err) => console.log(err));
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      // прилетает token
+      if (data) {
+        localStorage.setItem('jwt', data.token);
+        return data;
+      } else {
+        return;
+      }
+    })
+    .catch((err) => console.log(err));
 };

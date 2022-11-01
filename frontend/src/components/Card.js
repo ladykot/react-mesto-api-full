@@ -9,14 +9,16 @@ function Card({
   onCardDeleteClick,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const {
-    link,
-    name,
-    _id,
-    owner: { _id: ownerId },
-  } = card;
+  // const {
+  //   link,
+  //   name,
+  //   owner: { _id: ownerId },
+  // } = card;
 
-  const isOwn = ownerId === currentUser._id;
+  console.log("id владельца карточки", card.owner)
+  console.log("id текущего пользователя", currentUser._id)
+
+  const isOwn = card.owner === currentUser._id;
   const likes = card.likes.map((item) => item._id); // упрощаем работу с лайками, оставили только id
   const isLiked = likes.includes(currentUser._id);
 
@@ -39,7 +41,7 @@ function Card({
     <div className="cards__item">
       <img
         className="cards__item-pic hover"
-        src={link}
+        src={card.link}
         onClick={handleImageClick}
       />
       {isOwn && (
@@ -52,7 +54,7 @@ function Card({
       )}
 
       <div className="cards__item-group">
-        <h2 className="cards__title">{name}</h2>
+        <h2 className="cards__title">{card.name}</h2>
         <button
           type="button"
           className={`cards__union ${isLiked && 'cards__union_active'}`}

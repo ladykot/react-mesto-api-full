@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
-import "../index.css";
-import Footer from "./Footer";
+import React, { useState } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import '../index.css';
+import Footer from './Footer';
 
-import Header from "./Header";
-import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import ImagePopup from "./ImagePopup";
-import Login from "./Login";
-import Register from "./Register";
-import * as userAuth from "../utils/Auth";
-import ProtectedRoute from "./ProtectedRoute";
+import Header from './Header';
+import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import ImagePopup from './ImagePopup';
+import Login from './Login';
+import Register from './Register';
+import * as userAuth from '../utils/Auth';
+import ProtectedRoute from './ProtectedRoute';
 
-import api from "../utils/Api";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import InfoTooltip from "./InfoTooltip";
+import api from '../utils/Api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -43,21 +43,22 @@ function App() {
       .authorize(email, password)
       .then((data) => {
         if (data.token) {
-          localStorage.setItem("jwt", data.token); // сохранили токен
+          localStorage.setItem('jwt', data.token); // сохранили токен
           setLoggedIn(true); // залогинились
-          history.push("/");
+          history.push('/');
         }
       })
       .catch((err) => console.log(err));
   };
 
   const onRegister = ({ email, password }) => {
+    console.log(email)
     return userAuth
       .register(email, password)
       .then((res) => {
         if (res.data) {
           setInfoTooltipOpen({ isOpen: true, isSucess: true });
-          history.push("/signin");
+          history.push('/signin');
         } else {
           setInfoTooltipOpen({ isOpen: true, isSucess: false });
         }
@@ -69,8 +70,8 @@ function App() {
 
   const onSignOut = () => {
     setLoggedIn(false);
-    localStorage.removeItem("jwt");
-    history.push("/");
+    localStorage.removeItem('jwt');
+    history.push('/');
   };
 
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
@@ -80,12 +81,13 @@ function App() {
       .then((res) => {
         // если такой есть, то логинимся
         if (res) {
-          setUserdata(res.data.email);
+          
+          setUserdata(res.email);
           setLoggedIn(true);
-          history.push("/");
+          history.push('/');
         } else {
           setInfoTooltipOpen({ isOpen: true, isSucess: false });
-          history.push("/");
+          history.push('/');
         }
       })
       .catch((err) => {
@@ -96,8 +98,8 @@ function App() {
   // проверка наличия токена в хранилище при изменении loggedIn
   React.useEffect(() => {
     if (!loggedIn) {
-      if (localStorage.getItem("jwt")) {
-        const jwt = localStorage.getItem("jwt");
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
         auth(jwt);
       }
     }
@@ -106,7 +108,7 @@ function App() {
   React.useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getInitialCards(), api.getProfileData()])
-        .then(([cards, data]) => {
+        .then(([{cards}, {data}]) => {
           setCards(cards);
           setCurrentUser(data);
         })
@@ -137,8 +139,8 @@ function App() {
   function handleCardLike(card, isLiked) {
     api
       .changeLikeCardStatus(card._id, isLiked)
-      .then((res) => {
-        setCards((state) => state.map((c) => (c._id === res._id ? res : c)));
+      .then(({card}) => {
+        setCards((state) => state.map((c) => (c._id === card._id ? card : c)));
       })
       .catch((err) => console.log(err));
   }
@@ -171,8 +173,6 @@ function App() {
     setInfoTooltipOpen(false);
   };
 
-
-
   // добавление новых данных в профиле
   const handelUpdateUser = ({ name, about }) => {
     api
@@ -199,7 +199,8 @@ function App() {
   const handleAddPlaceSubmit = ({ name, link }) => {
     api
       .addCard(name, link)
-      .then((newCard) => {
+      .then(({newCard}) => {
+        console.log(newCard);
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
@@ -212,7 +213,6 @@ function App() {
         <Header userData={userData} loggedIn={loggedIn} onSignOut={onSignOut} />
 
         <Switch>
-
           <Route path="/signin">
             <Login title="Вход" buttonText="Войти" onLogin={onLogin} />
           </Route>
@@ -240,7 +240,6 @@ function App() {
             onCardDeleteClick={handleCardDeleteClick} // открыли попап подтверждения
             cards={cards}
           />
-
         </Switch>
 
         <Footer />
@@ -291,7 +290,6 @@ function App() {
           onClose={closeAllPopups}
           buttonText="Сохранить"
         ></EditAvatarPopup>
-
       </div>
     </CurrentUserContext.Provider>
   );

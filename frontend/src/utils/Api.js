@@ -1,7 +1,10 @@
+import { BASE_URL } from './constants';
+
 class Api {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
     this._baseUrl = baseUrl;
+    // this._token = headers.authorization;
   }
 
   _handleResponse(data) {
@@ -13,7 +16,11 @@ class Api {
 
   getProfileData() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        'Content-Type': 'application/json',
+      }
+      // headers: this._headers,
     }).then(this._handleResponse);
   }
 
@@ -25,14 +32,14 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: isLiked ? "DElETE" : "PUT",
+      method: isLiked ? 'DElETE' : 'PUT',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   editProfileData(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name,
@@ -43,7 +50,7 @@ class Api {
 
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         name,
@@ -54,7 +61,7 @@ class Api {
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this._headers,
     }).then(this._handleResponse);
   }
@@ -62,21 +69,21 @@ class Api {
   addLike(id) {
     // debugger
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
+      method: 'PUT',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   changeAvatar = (avatar) => {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar,
@@ -85,12 +92,12 @@ class Api {
   };
 }
 
-// экземпляр класса для работы с удаленным сервером
+
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-45", // ссылка на бэкенд
+  baseUrl: BASE_URL, // ссылка на бэкенд
   headers: {
-    authorization: "96f24a59-2446-45e8-8a79-9c1dd75cac85",
-    "Content-Type": "application/json",
+    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    'Content-Type': 'application/json',
   },
 });
 
