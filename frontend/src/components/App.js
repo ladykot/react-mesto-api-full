@@ -78,11 +78,12 @@ function App() {
   const auth = async (jwt) => {
     return userAuth
       .getContent(jwt)
-      .then((res) => {
+      .then(({data}) => {
+        console.log(data)
         // если такой есть, то логинимся
-        if (res) {
-          
-          setUserdata(res.email);
+        if (data) {
+
+          setUserdata(data.email);
           setLoggedIn(true);
           history.push('/');
         } else {
@@ -177,7 +178,7 @@ function App() {
   const handelUpdateUser = ({ name, about }) => {
     api
       .editProfileData(name, about)
-      .then((data) => {
+      .then(({data}) => {
         setCurrentUser(data);
         closeAllPopups();
       })
@@ -188,7 +189,7 @@ function App() {
   const handleUpdateAvatar = (avatar) => {
     api
       .changeAvatar(avatar)
-      .then((data) => {
+      .then(({data}) => {
         setCurrentUser(data);
         closeAllPopups();
       })
@@ -199,8 +200,7 @@ function App() {
   const handleAddPlaceSubmit = ({ name, link }) => {
     api
       .addCard(name, link)
-      .then(({newCard}) => {
-        console.log(newCard);
+      .then(({card: newCard}) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })

@@ -8,10 +8,8 @@ const Card = require('../models/card');
 
 module.exports.addCard = (req, res, next) => {
   const { name, link } = req.body;
-  console.log(name);
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    // .populate(['owner', 'likes'])
     .then((card) => res.send({ card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
