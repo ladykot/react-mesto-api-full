@@ -1,5 +1,6 @@
 const allowedCors = [
   'http://mesto.ladykot.nomoredomains.icu',
+  'https://mesto.ladykot.nomoredomains.icu',
   'http://api.mesto.ladykot.nomoredomains.icu',
   'https://api.mesto.ladykot.nomoredomains.icu',
   'http://localhost:5555',
@@ -9,7 +10,6 @@ const allowedCors = [
 ];
 
 module.exports = (req, res, next) => {
-  console.dir(req.headers);
   const { origin } = req.headers;
   const { method } = req;
 
