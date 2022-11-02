@@ -14,8 +14,6 @@ function Card({
   const isOwn = card.owner === currentUser._id;  
   const isLiked = card.likes.some((i) => i === currentUser._id);
 
-  console.log('кто', isOwn, isLiked);
-
   // обработчик клика по карточке для просмотра изображения
   function handleImageClick() {
     onCardClick(card);

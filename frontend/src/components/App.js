@@ -108,7 +108,7 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getInitialCards(), api.getProfileData()])
         .then(([{cards}, {data}]) => {
-          setCards(cards);
+          setCards(cards.reverse()); // развернем карточки в обратном порядке
           setCurrentUser(data);
         })
         .catch((err) => console.log(err));
@@ -200,7 +200,7 @@ function App() {
       .addCard(name, link)
       .then(({card: newCard}) => {
         console.log(newCard)
-        setCards(([newCard, ...cards]).reverse);
+        setCards(([newCard, ...cards]));
         closeAllPopups();
       })
       .catch((err) => console.log(err));
