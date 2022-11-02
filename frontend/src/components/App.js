@@ -41,9 +41,9 @@ function App() {
   const onLogin = ({ email, password }) => {
     return userAuth
       .authorize(email, password)
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem('jwt', data.token); // сохранили токен
+      .then(({token}) => {
+        if (token) {
+          localStorage.setItem('jwt', token); // сохранили токен
           setLoggedIn(true); // залогинились
           history.push('/');
         }
@@ -56,7 +56,7 @@ function App() {
     return userAuth
       .register(email, password)
       .then((res) => {
-        if (res.data) {
+        if (res) {
           setInfoTooltipOpen({ isOpen: true, isSucess: true });
           history.push('/signin');
         } else {
@@ -82,7 +82,6 @@ function App() {
         console.log(data)
         // если такой есть, то логинимся
         if (data) {
-
           setUserdata(data.email);
           setLoggedIn(true);
           history.push('/');
@@ -128,6 +127,7 @@ function App() {
     api
       .deleteCard(removedCard._id)
       .then((res) => {
+        
         setCards((state) =>
           state.filter((item) => item._id !== removedCard._id)
         );
