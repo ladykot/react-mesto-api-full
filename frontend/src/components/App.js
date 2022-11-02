@@ -200,7 +200,7 @@ function App() {
       .addCard(name, link)
       .then(({card: newCard}) => {
         console.log(newCard)
-        setCards([newCard, ...cards]);
+        setCards(([newCard, ...cards]).reverse);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
