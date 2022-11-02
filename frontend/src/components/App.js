@@ -79,7 +79,6 @@ function App() {
     return userAuth
       .getContent(jwt)
       .then(({data}) => {
-        console.log(data)
         // если такой есть, то логинимся
         if (data) {
           setUserdata(data.email);
@@ -127,7 +126,6 @@ function App() {
     api
       .deleteCard(removedCard._id)
       .then((res) => {
-        
         setCards((state) =>
           state.filter((item) => item._id !== removedCard._id)
         );
@@ -201,6 +199,7 @@ function App() {
     api
       .addCard(name, link)
       .then(({card: newCard}) => {
+        console.log(newCard)
         setCards([newCard, ...cards]);
         closeAllPopups();
       })

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -10,9 +11,10 @@ function Card({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const isOwn = card.owner === currentUser._id;
-  const likes = card.likes.map((item) => item._id); // упрощаем работу с лайками, оставили только id
-  const isLiked = likes.includes(currentUser._id);
+  const isOwn = card.owner === currentUser._id;  
+  const isLiked = card.likes.some((i) => i === currentUser._id);
+
+  console.log('кто', isOwn, isLiked);
 
   // обработчик клика по карточке для просмотра изображения
   function handleImageClick() {
