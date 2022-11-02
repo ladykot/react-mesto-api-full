@@ -15,7 +15,7 @@ const { errorHandler } = require('./midlewares/errorHandler');
 const { urlPattern } = require('./utils/url-pattern');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 
-const { PORT = 7777 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors());
