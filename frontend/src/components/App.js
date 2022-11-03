@@ -41,7 +41,7 @@ function App() {
   const onLogin = ({ email, password }) => {
     return userAuth
       .authorize(email, password)
-      .then(({token}) => {
+      .then(({ token }) => {
         if (token) {
           localStorage.setItem('jwt', token); // сохранили токен
           setLoggedIn(true); // залогинились
@@ -52,11 +52,12 @@ function App() {
   };
 
   const onRegister = ({ email, password }) => {
-    console.log(email)
+    console.log(email);
     return userAuth
       .register(email, password)
       .then((res) => {
-        if (res) {
+        if (res && res.email) {
+          console.log(res);
           setInfoTooltipOpen({ isOpen: true, isSucess: true });
           history.push('/signin');
         } else {
@@ -78,7 +79,7 @@ function App() {
   const auth = async (jwt) => {
     return userAuth
       .getContent(jwt)
-      .then(({data}) => {
+      .then(({ data }) => {
         // если такой есть, то логинимся
         if (data) {
           setUserdata(data.email);
@@ -107,7 +108,7 @@ function App() {
   React.useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getInitialCards(), api.getProfileData()])
-        .then(([{cards}, {data}]) => {
+        .then(([{ cards }, { data }]) => {
           setCards(cards.reverse()); // развернем карточки в обратном порядке
           setCurrentUser(data);
         })
@@ -138,7 +139,7 @@ function App() {
   function handleCardLike(card, isLiked) {
     api
       .changeLikeCardStatus(card._id, isLiked)
-      .then(({card}) => {
+      .then(({ card }) => {
         setCards((state) => state.map((c) => (c._id === card._id ? card : c)));
       })
       .catch((err) => console.log(err));
@@ -176,7 +177,7 @@ function App() {
   const handelUpdateUser = ({ name, about }) => {
     api
       .editProfileData(name, about)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
@@ -187,7 +188,7 @@ function App() {
   const handleUpdateAvatar = (avatar) => {
     api
       .changeAvatar(avatar)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
@@ -198,9 +199,9 @@ function App() {
   const handleAddPlaceSubmit = ({ name, link }) => {
     api
       .addCard(name, link)
-      .then(({card: newCard}) => {
-        console.log(newCard)
-        setCards(([newCard, ...cards]));
+      .then(({ card: newCard }) => {
+        console.log(newCard);
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.log(err));

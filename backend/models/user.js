@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false, // пароль не будет возвращаться из базы
   },
-});
+}, { toObject: { useProjection: true }, toJSON: { useProjection: true } });
 
 // создаём модель и экспортируем её
 module.exports = mongoose.model('user', userSchema);

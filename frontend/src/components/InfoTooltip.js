@@ -5,7 +5,7 @@ import unionErr from "../images/Union_err.svg"
 function InfoTooltip({ isOpen, onClose, isSucess }) {
   return (
     <section
-      className={`popup ${isOpen ? "popup_opened" : ""}`}
+      className={`popup ${isOpen ? "popup_opened" : ""}`} 
       onClick={onClose}
     >
       <div
@@ -16,7 +16,7 @@ function InfoTooltip({ isOpen, onClose, isSucess }) {
       >
         <button
           onClick={onClose}
-          type="button"
+          type="button"  
           className="popup__button-close popup__button-close_type_edit hover"
         ></button>
         <form className="popup__form-info">
