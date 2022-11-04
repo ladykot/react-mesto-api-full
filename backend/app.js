@@ -15,15 +15,10 @@ const { errorHandler } = require('./midlewares/errorHandler');
 const { urlPattern } = require('./utils/url-pattern');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 7777 } = process.env;
 const app = express();
 
 app.use(cors());
-// app.use(
-//   cors({
-//     Origin: 'https://mesto.ladykot.nomoredomains.icu',
-//   }),
-// );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -70,10 +65,6 @@ app.post(
 app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
-
-// app.get('/signout', (req, res) => {
-//   res.status(200).clearCookie('jwt').send({ message: 'Logout' });
-// });
 
 // обработка несуществующих адресов
 app.all('*', (req, res, next) => {

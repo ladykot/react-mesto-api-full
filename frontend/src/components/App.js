@@ -43,9 +43,12 @@ function App() {
       .authorize(email, password)
       .then(({ token }) => {
         if (token) {
-          localStorage.setItem('jwt', token); // сохранили токен
           setLoggedIn(true); // залогинились
+          localStorage.setItem('jwt', token); // сохранили токен
+          setUserdata(email); // установили почту в хедере
           history.push('/');
+        } else {
+          setInfoTooltipOpen({ isOpen: true, isSucess: false });
         }
       })
       .catch((err) => console.log(err));
@@ -72,7 +75,7 @@ function App() {
   const onSignOut = () => {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
-    history.push('/');
+    history.push('/signin');
   };
 
   // Аутотенфикация: если токен валиден, сохраняем данные, и пользователь логинится
