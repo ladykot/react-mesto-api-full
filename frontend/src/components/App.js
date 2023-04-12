@@ -37,7 +37,7 @@ function App() {
     isSucess: false,
   }); // состояние окна спеха/неуспеха
 
-  // авторизация и запись токена в хранилище
+  // авторизация (при клике на Войти) и запись токена в хранилище
   const onLogin = ({ email, password }) => {
     return userAuth
       .authorize(email, password)
@@ -60,7 +60,6 @@ function App() {
       .register(email, password)
       .then((res) => {
         if (res && res.email) {
-          console.log(res);
           setInfoTooltipOpen({ isOpen: true, isSucess: true });
           history.push('/signin');
         } else {
@@ -108,11 +107,12 @@ function App() {
     }
   }, [loggedIn]);
 
+  // получаем карточки с сервера
   React.useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getInitialCards(), api.getProfileData()])
         .then(([{ cards }, { data }]) => {
-          setCards(cards.reverse()); // развернем карточки в обратном порядке
+          setCards(cards.reverse()); // развернем карточки в обратном порядке при добавлении в массив
           setCurrentUser(data);
         })
         .catch((err) => console.log(err));
@@ -213,6 +213,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
+
         <Header userData={userData} loggedIn={loggedIn} onSignOut={onSignOut} />
 
         <Switch>
@@ -246,6 +247,7 @@ function App() {
         </Switch>
 
         <Footer />
+
         <ImagePopup
           name="big-image"
           isOpen={!!isSelectedCard} // если есть карта, то isOpen == true

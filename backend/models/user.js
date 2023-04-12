@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    minlength: 2,
     validate: {
       validator: (v) => isEmail(v),
       message: 'Неправильный формат почты',
@@ -36,6 +37,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 2,
     select: false, // пароль не будет возвращаться из базы
   },
 }, { toObject: { useProjection: true }, toJSON: { useProjection: true } });

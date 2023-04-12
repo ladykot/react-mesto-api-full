@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function PopupWithForm({
   title,
@@ -7,13 +7,11 @@ function PopupWithForm({
   onClose,
   children,
   onSubmit,
-  buttonText
+  buttonText,
 }) {
-
-
   return (
     <section
-      className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}
+      className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}
       // закрытие по оверлею
       onClick={onClose}
     >
