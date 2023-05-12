@@ -15,7 +15,7 @@
 - HTML5;
 - CSS;
 - Flexbox;
-- GEID;
+- GRID;
 - Файловая структура по BEM;
 - JavaScript;
 - React (функциональные компоненты и хуки);
